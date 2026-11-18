@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChessPulse — one puzzle a day, no account, no ads</title>
+    <meta
+      name="description"
+      content="ChessPulse: today's Lichess daily puzzle on a real board, Puzzle Rush, train by theme, engine hints, live games, leaderboards and player lookup. No account, no ads, no paywall."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="./assets/index-q7d2zM-6.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BmrllOYZ.css">
+  </head>
+  <body>
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="wordmark" href="./">ChessPulse</a>
+        <span class="nav-date" id="nav-date"></span>
+        <span class="nav-spacer"></span>
+        <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false" title="Toggle move sounds">Sound off</button>
+        <a class="nav-link" href="#live">Lichess TV</a>
+        <span class="streak-chip" id="streak-chip" title="Your daily-puzzle streak, stored in this browser">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 3-2 4.5-2 7 0 1.5 1 2.5 2 2.5S14 10.5 14 9c2 1.5 3.5 3.5 3.5 6A5.5 5.5 0 0 1 12 20.5 5.5 5.5 0 0 1 6.5 15C6.5 10 10 6 12 2z" fill="#16A34A"/></svg>
+          <span id="streak-count">0</span>
+        </span>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- ============ HERO: DAILY PUZZLE ============ -->
+      <section class="hero" aria-label="Today's puzzle">
+        <div class="board-col">
+          <h1>Today&rsquo;s puzzle.</h1>
+          <p class="pull-quote">White to move &mdash; find the win.</p>
+          <div class="board-row">
+            <div class="eval-bar" id="eval-bar" title="Engine evaluation from Lichess cloud eval">
+              <div class="eval-white" id="eval-white" style="height: 50%"></div>
+              <span class="eval-label" id="eval-label">—</span>
+            </div>
+            <div class="board-wrap">
+              <div id="board" class="board-host"></div>
+              <div class="toast" id="board-toast" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+          <div class="game-line" id="game-line"></div>
+          <div class="replay-row">
+            <button class="btn btn-quiet" id="replay-game" type="button">Replay the full game</button>
+            <button class="btn btn-quiet" id="replay-back" type="button" hidden>Back to puzzle</button>
+            <span class="replay-pos" id="replay-pos"></span>
+            <span class="opening-line" id="opening-line"></span>
+          </div>
+        </div>
+
+        <aside class="rail" aria-label="Puzzle panel">
+          <div class="rail-top">
+            <span class="label">Puzzle of the day</span>
+            <span class="chip" id="puzzle-rating">Rated —</span>
+          </div>
+          <div class="side-to-move" id="side-to-move">White to move</div>
+          <div class="hearts" id="hearts" role="text" aria-label="5 of 5 hearts left"></div>
+          <ol class="move-list" id="move-list" aria-live="polite"></ol>
+          <div class="timer-row">
+            <span class="label">Your time</span>
+            <span class="timer" id="puzzle-timer">0:00</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-quiet" id="hint-btn" type="button">Hint</button>
+            <button class="btn btn-quiet" id="solution-btn" type="button">Reveal solution</button>
+          </div>
+          <div class="engine-panel" id="engine-panel">
+            <div class="label">Engine hint — Lichess cloud eval</div>
+            <div class="engine-body" id="engine-body">Loading engine eval&hellip;</div>
+          </div>
+          <div class="tablebase-line" id="tablebase-line"></div>
+          <div class="solved-box" id="solved-box" hidden>
+            <div class="solved-title">Solved!</div>
+            <div class="solved-detail" id="solved-detail"></div>
+            <div class="btn-row">
+              <button class="btn btn-primary" id="share-btn" type="button">Share result</button>
+              <button class="btn btn-quiet" id="next-puzzle-btn" type="button">Next puzzle</button>
+            </div>
+            <canvas id="share-canvas" width="1080" height="566" hidden></canvas>
+          </div>
+          <div class="stats-line" id="stats-line">Solved 0 &middot; Best streak 0 &middot; Avg —</div>
+          <p class="keyboard-hint">Keyboard: focus the board, type a square (e2) then a destination (e4). Arrow keys move the focus square, Enter plays.</p>
+        </aside>
+      </section>
+
+      <!-- ============ TRAIN & RUSH ============ -->
+      <section class="card" id="train" aria-label="Train and Puzzle Rush">
+        <h2>Train &amp; Rush</h2>
+        <p class="section-sub">Endless puzzles from Lichess — no account, no cap. Rush is a 3-minute sprint; Train picks a theme and a difficulty.</p>
+        <div class="train-controls">
+          <div class="mode-row">
+            <button class="btn btn-primary" id="rush-start" type="button">Start 3-minute Rush</button>
+            <span class="rush-status" id="rush-status">Best Rush: <strong id="rush-best">0</strong></span>
+            <span class="rush-clock" id="rush-clock" hidden>3:00</span>
+            <span class="rush-score" id="rush-score" hidden>Score 0 &middot; Combo ×1</span>
+            <button class="btn btn-quiet" id="rush-stop" type="button" hidden>End Rush</button>
+          </div>
+          <div class="theme-row" id="theme-chips" role="group" aria-label="Puzzle theme"></div>
+          <div class="diff-row">
+            <label for="difficulty">Difficulty</label>
+            <select id="difficulty">
+              <option value="easiest">Easiest</option>
+              <option value="easier">Easier</option>
+              <option value="normal" selected>Normal</option>
+              <option value="harder">Harder</option>
+              <option value="hardest">Hardest</option>
+            </select>
+            <button class="btn btn-quiet" id="train-start" type="button">New training puzzle</button>
+            <span class="train-status" id="train-status"></span>
+          </div>
+        </div>
+        <div class="train-grid">
+          <div class="board-wrap small">
+            <div id="trainer-board" class="board-host"></div>
+            <div class="toast" id="trainer-toast" role="status" aria-live="polite"></div>
+          </div>
+          <div class="trainer-rail">
+            <div class="label">Trainer</div>
+            <div class="side-to-move" id="trainer-side">Pick a mode to begin</div>
+            <div class="trainer-meta" id="trainer-meta"></div>
+            <ol class="move-list" id="trainer-moves"></ol>
+            <div class="btn-row">
+              <button class="btn btn-quiet" id="trainer-hint" type="button">Hint</button>
+              <button class="btn btn-quiet" id="trainer-solution" type="button">Reveal solution</button>
+              <button class="btn btn-quiet" id="trainer-next" type="button">Skip puzzle</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ LIVE GAMES ============ -->
+      <section class="card" id="live" aria-label="Live games">
+        <h2>Live on Lichess TV</h2>
+        <p class="section-sub">Real games happening right now, across every TV channel. Mini boards refresh every 30 seconds.</p>
+        <div class="tv-featured" id="tv-featured">
+          <div class="tv-board" id="tv-featured-board"></div>
+          <div class="tv-info">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span id="tv-featured-players">Loading live game&hellip;</span>
+            <a id="tv-featured-link" href="https://lichess.org/tv" target="_blank" rel="noopener">Watch on Lichess ↗</a>
+          </div>
+        </div>
+        <div class="channels-grid" id="channels-grid"></div>
+      </section>
+
+      <!-- ============ LEADERBOARD ============ -->
+      <section class="card" id="leaderboard" aria-label="Leaderboard">
+        <h2>Top players</h2>
+        <p class="section-sub">Live ratings from Lichess. No puzzle leaderboard exists on Lichess — this is the real top 10 per time control.</p>
+        <div class="tabs" role="tablist" aria-label="Time control">
+          <button class="tab active" data-perf="classical" role="tab" type="button">Classical</button>
+          <button class="tab" data-perf="rapid" role="tab" type="button">Rapid</button>
+          <button class="tab" data-perf="blitz" role="tab" type="button">Blitz</button>
+        </div>
+        <ol class="leaderboard-list" id="leaderboard-list"></ol>
+        <div class="card-error" id="leaderboard-error" hidden></div>
+      </section>
+
+      <!-- ============ PLAYER LOOKUP ============ -->
+      <section class="card" id="lookup" aria-label="Player lookup">
+        <h2>Look up any Lichess player</h2>
+        <p class="section-sub">Profile, ratings, rating history and Puzzle Storm highs — straight from Lichess.</p>
+        <form class="lookup-form" id="lookup-form">
+          <label for="lookup-input" class="sr-only">Lichess username</label>
+          <input id="lookup-input" type="text" placeholder="e.g. thibault, MagnusCarlsen, viditchess" autocomplete="off" />
+          <button class="btn btn-primary" type="submit">Look up</button>
+        </form>
+        <div class="lookup-result" id="lookup-result"></div>
+      </section>
+
+      <!-- ============ ARCHIVE + STREAK ============ -->
+      <section class="card" id="archive" aria-label="Puzzle archive">
+        <h2>Your archive &amp; streak</h2>
+        <p class="section-sub">Every day you visit, that day&rsquo;s puzzle is saved here — your archive grows by itself. Lichess has no date-indexed archive, so this is yours, in your browser.</p>
+        <div class="archive-grid">
+          <div>
+            <div class="label">Past puzzles</div>
+            <ol class="archive-list" id="archive-list"></ol>
+          </div>
+          <div>
+            <div class="label">Last 28 days</div>
+            <div class="streak-cal" id="streak-cal"></div>
+            <div class="cal-legend">Solved days are green. Your archive starts today — come back tomorrow for a second entry.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TOURNAMENTS ============ -->
+      <section class="card" id="tournaments" aria-label="Tournaments and broadcasts">
+        <h2>Happening now</h2>
+        <p class="section-sub">Live arena tournaments and official Lichess broadcasts.</p>
+        <div class="two-col">
+          <div>
+            <div class="label">Live tournaments</div>
+            <ul class="plain-list" id="tournament-list"><li>Loading&hellip;</li></ul>
+          </div>
+          <div>
+            <div class="label">Official broadcasts</div>
+            <ul class="plain-list" id="broadcast-list"><li>Loading&hellip;</li></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Puzzles, ratings and live games from Lichess (lichess.org) — free and open. ChessPulse is not affiliated with Chess.com or Lichess. Your streak lives in your browser, nowhere else.</p>
+      <p class="footer-small">Puzzle validation replays the published solution line — ChessPulse does not run an engine to judge arbitrary moves. Engine hints come from the Lichess cloud-eval cache; some positions have no cached eval. Opening names come from a reference table of common openings, not the live explorer.</p>
+    </footer>
+
+  </body>
+</html>

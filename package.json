@@ -1,0 +1,19 @@
+{
+  "name": "chesspulse",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "ChessPulse — one daily Lichess puzzle on a real board, Puzzle Rush, train by theme, engine hints, live TV games, leaderboards and player lookup. No account, no ads, no paywall.",
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "dev": "vite",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.3",
+    "vitest": "^2.1.8"
+  }
+}
