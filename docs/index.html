@@ -11,30 +11,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="./assets/index-q7d2zM-6.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BmrllOYZ.css">
+    <script type="module" crossorigin src="./assets/index-THPo9Ohk.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-SO-TNmwk.css">
   </head>
   <body>
-    <header class="nav">
-      <div class="nav-inner">
-        <a class="wordmark" href="./">ChessPulse</a>
-        <span class="nav-date" id="nav-date"></span>
-        <span class="nav-spacer"></span>
+    <div id="root"></div>
+
+    <main class="container">
+      <!-- App toolbar: keeps the ids src/main.ts wires (date, sound, streak).
+           The site navbar now lives in the React shell above. -->
+      <div class="app-toolbar">
+        <span class="app-toolbar-date" id="nav-date"></span>
+        <span class="app-toolbar-spacer"></span>
         <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false" title="Toggle move sounds">Sound off</button>
-        <a class="nav-link" href="#live">Lichess TV</a>
         <span class="streak-chip" id="streak-chip" title="Your daily-puzzle streak, stored in this browser">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 3-2 4.5-2 7 0 1.5 1 2.5 2 2.5S14 10.5 14 9c2 1.5 3.5 3.5 3.5 6A5.5 5.5 0 0 1 12 20.5 5.5 5.5 0 0 1 6.5 15C6.5 10 10 6 12 2z" fill="#16A34A"/></svg>
           <span id="streak-count">0</span>
         </span>
       </div>
-    </header>
 
-    <main class="container">
       <!-- ============ HERO: DAILY PUZZLE ============ -->
-      <section class="hero" aria-label="Today's puzzle">
+      <section class="hero" id="play" aria-label="Today's puzzle">
         <div class="board-col">
           <h1>Today&rsquo;s puzzle.</h1>
           <p class="pull-quote">White to move &mdash; find the win.</p>
@@ -93,7 +93,7 @@
       </section>
 
       <!-- ============ TRAIN & RUSH ============ -->
-      <section class="card" id="train" aria-label="Train and Puzzle Rush">
+      <section class="card liquid-glass" id="train" aria-label="Train and Puzzle Rush">
         <h2>Train &amp; Rush</h2>
         <p class="section-sub">Endless puzzles from Lichess — no account, no cap. Rush is a 3-minute sprint; Train picks a theme and a difficulty.</p>
         <div class="train-controls">
@@ -138,7 +138,7 @@
       </section>
 
       <!-- ============ LIVE GAMES ============ -->
-      <section class="card" id="live" aria-label="Live games">
+      <section class="card liquid-glass" id="live" aria-label="Live games">
         <h2>Live on Lichess TV</h2>
         <p class="section-sub">Real games happening right now, across every TV channel. Mini boards refresh every 30 seconds.</p>
         <div class="tv-featured" id="tv-featured">
@@ -153,7 +153,7 @@
       </section>
 
       <!-- ============ LEADERBOARD ============ -->
-      <section class="card" id="leaderboard" aria-label="Leaderboard">
+      <section class="card liquid-glass" id="leaderboard" aria-label="Leaderboard">
         <h2>Top players</h2>
         <p class="section-sub">Live ratings from Lichess. No puzzle leaderboard exists on Lichess — this is the real top 10 per time control.</p>
         <div class="tabs" role="tablist" aria-label="Time control">
@@ -166,7 +166,7 @@
       </section>
 
       <!-- ============ PLAYER LOOKUP ============ -->
-      <section class="card" id="lookup" aria-label="Player lookup">
+      <section class="card liquid-glass" id="lookup" aria-label="Player lookup">
         <h2>Look up any Lichess player</h2>
         <p class="section-sub">Profile, ratings, rating history and Puzzle Storm highs — straight from Lichess.</p>
         <form class="lookup-form" id="lookup-form">
@@ -178,7 +178,7 @@
       </section>
 
       <!-- ============ ARCHIVE + STREAK ============ -->
-      <section class="card" id="archive" aria-label="Puzzle archive">
+      <section class="card liquid-glass" id="archive" aria-label="Puzzle archive">
         <h2>Your archive &amp; streak</h2>
         <p class="section-sub">Every day you visit, that day&rsquo;s puzzle is saved here — your archive grows by itself. Lichess has no date-indexed archive, so this is yours, in your browser.</p>
         <div class="archive-grid">
@@ -195,7 +195,7 @@
       </section>
 
       <!-- ============ TOURNAMENTS ============ -->
-      <section class="card" id="tournaments" aria-label="Tournaments and broadcasts">
+      <section class="card liquid-glass" id="tournaments" aria-label="Tournaments and broadcasts">
         <h2>Happening now</h2>
         <p class="section-sub">Live arena tournaments and official Lichess broadcasts.</p>
         <div class="two-col">
